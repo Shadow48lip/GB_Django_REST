@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'django_filters',
 
     # 'authors',
     'users',
@@ -144,9 +145,9 @@ CORS_ALLOWED_ORIGINS = [
 #     ]
 # }
 
-# https://github.com/vbabiy/djangorestframework-camel-case
-REST_FRAMEWORK = {
 
+REST_FRAMEWORK = {
+    # https://github.com/vbabiy/djangorestframework-camel-case
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
         'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
@@ -158,6 +159,11 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseFormParser',
         'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        # Any other parsers
     ),
+
+    # https://django-filter.readthedocs.io/en/stable/
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
 }
