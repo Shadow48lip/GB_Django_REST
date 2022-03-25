@@ -134,7 +134,8 @@ AUTH_USER_MODEL = 'users.User'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:50966',
 ]
-# CORS_ALLOW_ALL_ORIGINS = True
+# разрешает всем, потом надо отключить
+CORS_ALLOW_ALL_ORIGINS = True
 
 # module: rest_framework
 # REST_FRAMEWORK = {

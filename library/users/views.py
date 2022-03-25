@@ -13,5 +13,8 @@ class UserCustomViewSet(mixins.RetrieveModelMixin,
                         mixins.UpdateModelMixin,
                         mixins.ListModelMixin,
                         GenericViewSet):
-    queryset = User.objects.all()
+    # queryset = User.objects.all()
+    queryset = User.objects.get_queryset().order_by('-id')
     serializer_class = UserModelSerializer
+
+

@@ -1,8 +1,10 @@
+import React from "react";
+
 const UserItem = ({user}) => {
     return (
         <tr>
             <td>
-                {user.username}
+                <li key={user.id}>{user.username}</li>
             </td>
             <td>
                 {user.first_name}
@@ -21,19 +23,25 @@ const UserList = ({users}) => {
 
     return (
         <table>
-            <th>
-                User name
-            </th>
-            <th>
-                First name
-            </th>
-            <th>
-                Last Name
-            </th>
-            <th>
-                E-mail
-            </th>
-            {users.map((user) => <UserItem user={user} />)}
+            <thead>
+            <tr>
+                <td>
+                    User name
+                </td>
+                <th>
+                    First name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    E-mail
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {users.map((user) => <UserItem user={user}/>)}
+            </tbody>
         </table>
     )
 }

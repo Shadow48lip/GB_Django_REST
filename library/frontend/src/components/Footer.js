@@ -1,7 +1,7 @@
-
+import React from "react";
 const FooterContent = () => {
     return (
-        <div className="panel-footer">footer page</div>
+        <div className="panel-footer"><br/><br/>Django Rest Framework plus React</div>
     )
 }
 
