@@ -9,6 +9,7 @@ import MenuContent from "./components/Menu";
 import MainPage from "./components/Main";
 import NotFound from "./components/NotFound";
 import ToDos from "./components/ToDos";
+import HeaderContent from "./components/Header";
 
 class App extends React.Component {
     constructor(props) {
@@ -60,8 +61,9 @@ class App extends React.Component {
 
         return (
             <BrowserRouter>
+                <HeaderContent/>
+                <MenuContent/>
                 <main>
-                    <MenuContent/>
                     <Routes>
                         <Route path='/' element={<MainPage />} />
                         <Route path='/projects/*' element={<ProjectList projects={this.state.projects} todos={this.state.todos} />} />
@@ -71,9 +73,7 @@ class App extends React.Component {
                     </Routes>
                 </main>
 
-
-
-                    <FooterContent/>
+                <FooterContent/>
             </BrowserRouter>
         )
     }
