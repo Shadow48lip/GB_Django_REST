@@ -1,6 +1,28 @@
 import React from "react";
 import {Link, Routes, Route, useParams} from "react-router-dom";
+import {Table} from 'antd';
+
 import ToDos from "./ToDos";
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'id',
+        id: 'id',
+        // render: (text) => <Link to={text}>{text}</Link>
+    },
+    {
+        title: 'users',
+        dataIndex: 'users',
+        key: 'users',
+    },
+    {
+        title: 'External link',
+        dataIndex: 'link',
+        key: 'extlink',
+    },
+]
 
 const ProjectToDoList = ({todos}) => {
     const {id} = useParams();
@@ -17,46 +39,12 @@ const ProjectToDoList = ({todos}) => {
     return <div>нет записей</div>
 };
 
-
-
-const ProjectItem = ({project}) => {
-    return (
-        <tr key={project.id}>
-            <td>
-                <Link to={project.id}>{project.name}</Link>
-            </td>
-            <td>
-                {project.users}
-            </td>
-            <td>
-                {project.link}
-            </td>
-        </tr>
-    )
-}
-
-
 const ProjectList = ({projects, todos}) => {
+    projects.map((project) => project.name = <Link to={project.id}>{project.name}</Link>)
+
     return (
         <div>
-            <table className="App-header">
-                <thead>
-                <tr>
-                    <td>
-                        Project name
-                    </td>
-                    <th>
-                        Users
-                    </th>
-                    <th>
-                        Link
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {projects.map((project) => <ProjectItem project={project}/>)}
-                </tbody>
-            </table>
+            <Table columns={columns} dataSource={projects} />
             <Routes>
                 {/*<Route path=":id" element={<ProjectToDoList/>}/>*/}
                 <Route path=":id" element={<ProjectToDoList todos={todos}/>}/>
@@ -64,6 +52,52 @@ const ProjectList = ({projects, todos}) => {
         </div>
     )
 }
+
+// const ProjectItem = ({project}) => {
+//     return (
+//         <tr key={project.id}>
+//             <td>
+//                 <Link to={project.id}>{project.name}</Link>
+//             </td>
+//             <td>
+//                 {project.users}
+//             </td>
+//             <td>
+//                 {project.link}
+//             </td>
+//         </tr>
+//     )
+// }
+
+
+// const ProjectList = ({projects, todos}) => {
+//     return (
+//         <div>
+//             <table className="App-header">
+//                 <thead>
+//                 <tr>
+//                     <td>
+//                         Project name
+//                     </td>
+//                     <th>
+//                         Users
+//                     </th>
+//                     <th>
+//                         Link
+//                     </th>
+//                 </tr>
+//                 </thead>
+//                 <tbody>
+//                 {projects.map((project) => <ProjectItem project={project}/>)}
+//                 </tbody>
+//             </table>
+//             <Routes>
+//                 {/*<Route path=":id" element={<ProjectToDoList/>}/>*/}
+//                 <Route path=":id" element={<ProjectToDoList todos={todos}/>}/>
+//             </Routes>
+//         </div>
+//     )
+// }
 
 
 export default ProjectList;
