@@ -25,6 +25,12 @@ const columns = [
     },
 ]
 
+const UserList = ({users}) => {
+    // console.log(users)
+    return (
+        <Table columns={columns} dataSource={users} />
+    )
+}
 
 // const UserItem = ({user}) => {
 //     return (
@@ -45,12 +51,6 @@ const columns = [
 //     )
 // }
 
-const UserList = ({users}) => {
-    // console.log(users)
-    return (
-        <Table columns={columns} dataSource={users} />
-    )
-}
 // const UserList = ({users}) => {
 //
 //     return (

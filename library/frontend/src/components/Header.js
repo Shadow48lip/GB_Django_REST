@@ -7,7 +7,7 @@ const HeaderContent = () => {
             <PageHeader
                 // className="site-page-header"
                 title="Geekbratin DRF"
-                subTitle="демонстрационный сайт"
+                subTitle="демонстрационный проект"
             />
             {/*<Divider/>*/}
         </div>

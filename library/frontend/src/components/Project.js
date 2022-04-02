@@ -7,9 +7,8 @@ import ToDos from "./ToDos";
 const columns = [
     {
         title: 'Name',
-        dataIndex: 'name',
-        key: 'id',
-        id: 'id',
+        dataIndex: 'href',
+        key: 'key',
         // render: (text) => <Link to={text}>{text}</Link>
     },
     {
@@ -27,6 +26,7 @@ const columns = [
 const ProjectToDoList = ({todos}) => {
     const {id} = useParams();
     let filtered_items = todos.filter((item) => item.project === id)
+    todos.map((todo_line) => todo_line.key = todo_line.id)
 
     if (filtered_items.length > 0) {
         return (
@@ -40,13 +40,15 @@ const ProjectToDoList = ({todos}) => {
 };
 
 const ProjectList = ({projects, todos}) => {
-    projects.map((project) => project.name = <Link to={project.id}>{project.name}</Link>)
+    // Через функцию заменяем элемент name на ссылку
+    // projects.map((project) => project.name = <Link to={project.id}>{project.name}</Link>)
+    projects.map((project) => project.href = <Link to={project.id}>{project.name}</Link>)
+    projects.map((project) => project.key = project.id)
 
     return (
         <div>
             <Table columns={columns} dataSource={projects} />
             <Routes>
-                {/*<Route path=":id" element={<ProjectToDoList/>}/>*/}
                 <Route path=":id" element={<ProjectToDoList todos={todos}/>}/>
             </Routes>
         </div>

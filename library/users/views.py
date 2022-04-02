@@ -1,4 +1,4 @@
-from rest_framework import mixins
+from rest_framework import mixins, permissions
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import User
 from .serializers import UserModelSerializer
@@ -16,5 +16,6 @@ class UserCustomViewSet(mixins.RetrieveModelMixin,
     # queryset = User.objects.all()
     queryset = User.objects.get_queryset().order_by('-id')
     serializer_class = UserModelSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
