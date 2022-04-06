@@ -25,18 +25,19 @@ const columns = [
 
 const ProjectToDoList = ({todos}) => {
     const {id} = useParams();
-    let filtered_items = todos.filter((item) => item.project === id)
+    console.log(todos)
+    let filtered_items = todos.filter((item) => item.project.id === id)
     todos.map((todo_line) => todo_line.key = todo_line.id)
 
     if (filtered_items.length > 0) {
         return (
             <div>
-                Проект - {id}
+                Проект - {filtered_items[0]['project']['name']}
                 <ToDos todos={filtered_items}/>
             </div>
         )
     }
-    return <div>нет записей</div>
+    return <div>! нет записей !</div>
 };
 
 const ProjectList = ({projects, todos}) => {

@@ -1,5 +1,7 @@
-from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer, StringRelatedField, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer, StringRelatedField, \
+    PrimaryKeyRelatedField
 from .models import Project, Todo
+from users.serializers import UserModelSerializer
 
 
 # JSON сериализация (представление) модели при выводе в API
@@ -15,6 +17,14 @@ class ProjectModelSerializer(ModelSerializer):
 
 # class TodoModelSerializer(HyperlinkedModelSerializer):
 class TodoModelSerializer(ModelSerializer):
+    project = ProjectModelSerializer()
+
+    class Meta:
+        model = Todo
+        fields = '__all__'
+
+
+class TodoModelSerializerBase(ModelSerializer):
     class Meta:
         model = Todo
         fields = '__all__'

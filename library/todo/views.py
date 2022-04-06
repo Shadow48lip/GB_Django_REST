@@ -4,7 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from todo.filters import ProjectFilter, TodoFilter
 from todo.models import Project, Todo
-from todo.serializers import ProjectModelSerializer, TodoModelSerializer
+from todo.serializers import ProjectModelSerializer, TodoModelSerializer, TodoModelSerializerBase
 
 
 # Paginations
@@ -35,9 +35,15 @@ class ProjectModelViewSet(ModelViewSet):
 class TodoModelViewSet(ModelViewSet):
     queryset = Todo.objects.all()
     # queryset = Todo_.objects.get_queryset().order_by('-id')
-    serializer_class = TodoModelSerializer
+    # serializer_class = TodoModelSerializerBase
     pagination_class = TodoPageNumberPagination
     filterset_class = TodoFilter
+
+    # Разные сериалайзеры в зависимости от метода. Это же учтено во фронте.
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TodoModelSerializer
+        return TodoModelSerializerBase
 
     # вместо удаления переключаем флаг
     def perform_destroy(self, instance):
