@@ -43,6 +43,7 @@ class TodoModelViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method in ['GET']:
             return TodoModelSerializer
+        # в других методах Проект выводим простыми id, а не доп. объектом
         return TodoModelSerializerBase
 
     # вместо удаления переключаем флаг
