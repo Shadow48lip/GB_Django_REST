@@ -1,6 +1,9 @@
 @import '~antd/dist/antd.css';
 
-
+.margins {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 
 /*.App {*/

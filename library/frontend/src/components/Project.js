@@ -1,56 +1,88 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Link, Routes, Route, useParams} from "react-router-dom";
-import {Table} from 'antd';
+import {Button, Divider, Input, Space, Table} from 'antd';
 
-import ToDos from "./ToDos";
+import ToDotList from "./ToDos";
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'href',
-        key: 'key',
-        // render: (text) => <Link to={text}>{text}</Link>
-    },
-    {
-        title: 'users',
-        dataIndex: 'users',
-        key: 'users',
-    },
-    {
-        title: 'External link',
-        dataIndex: 'link',
-        key: 'extlink',
-    },
-]
 
-const ProjectToDoList = ({todos}) => {
+const ProjectToDoList = ({todos, is_authenticated}) => {
     const {id} = useParams();
-    console.log(todos)
+    // console.log(todos)
     let filtered_items = todos.filter((item) => item.project.id === id)
-    todos.map((todo_line) => todo_line.key = todo_line.id)
 
     if (filtered_items.length > 0) {
         return (
             <div>
                 Проект - {filtered_items[0]['project']['name']}
-                <ToDos todos={filtered_items}/>
+                <ToDotList todos={filtered_items} is_authenticated={() => is_authenticated()}/>
             </div>
         )
     }
     return <div>! нет записей !</div>
 };
 
-const ProjectList = ({projects, todos}) => {
+const ProjectList = ({projects, todos, deleteProjectItem, is_authenticated}) => {
+    // https://ru.reactjs.org/docs/hooks-state.html https://ru.reactjs.org/docs/hooks-effect.html
+    const [data, setData] = useState();
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'href',
+            key: 'key',
+            // render: (text) => <Link to={text}>{text}</Link>
+        },
+        {
+            title: 'users',
+            dataIndex: 'users',
+            key: 'users',
+        },
+        {
+            title: 'External link',
+            dataIndex: 'link',
+            key: 'extlink',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    <Button danger onClick={() => deleteProjectItem(record.id)}>Удалить</Button>
+                </Space>
+            ),
+        },
+    ]
     // Через функцию заменяем элемент name на ссылку
     // projects.map((project) => project.name = <Link to={project.id}>{project.name}</Link>)
     projects.map((project) => project.href = <Link to={project.id}>{project.name}</Link>)
-    projects.map((project) => project.key = project.id)
+    projects.map((project) => project.key = project.id);
+
+    useEffect(() => {
+        // такая конструкция предотвращает перезапись стейта при поиске
+        if (typeof data !== 'object' && projects.length > 0) {
+            console.log('pr ' + projects);
+            setData(projects);
+        }
+    });
+
+    const onSearch = value => {
+        console.log('search: ' + value);
+        projects = projects.filter(item => item.name.toLowerCase().includes(value.toLowerCase()));
+        setData(projects);
+    }
+
 
     return (
         <div>
-            <Table columns={columns} dataSource={projects} />
+            <Divider plain>Проекты</Divider>
+            <Input.Search placeholder="поиск" allowClear onSearch={onSearch} style={{width: 300, margin: 10}}/>
+
+            <Table columns={columns} dataSource={data}/>
+            {is_authenticated() ?
+                <Button type='primary' href='/projects/create/' className='margins'>Создать новый проект</Button> : ''}
             <Routes>
-                <Route path=":id" element={<ProjectToDoList todos={todos}/>}/>
+                <Route path=":id"
+                       element={<ProjectToDoList todos={todos} is_authenticated={() => is_authenticated()}/>}/>
             </Routes>
         </div>
     )

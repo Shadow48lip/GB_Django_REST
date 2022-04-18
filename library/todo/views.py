@@ -33,7 +33,7 @@ class ProjectModelViewSet(ModelViewSet):
 
 # при удалении не удалять Todo_, а выставлять признак, что оно закрыто; добавить фильтрацию; 20 записей на страницу
 class TodoModelViewSet(ModelViewSet):
-    queryset = Todo.objects.all()
+    queryset = Todo.objects.filter(is_active=True)
     # queryset = Todo_.objects.get_queryset().order_by('-id')
     # serializer_class = TodoModelSerializerBase
     pagination_class = TodoPageNumberPagination
