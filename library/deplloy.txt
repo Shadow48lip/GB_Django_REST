@@ -1,0 +1,8 @@
+Backup DB:
+    manage.py dumpdata --natural-foreign -e contenttypes -e auth.Permission -o ./todo/fixtures/first_data.json
+Dependents:
+    pip freeze > requirements.txt
+
+Restore DB:
+    python manage.py migrate
+    manage.py loaddata first_data.json
